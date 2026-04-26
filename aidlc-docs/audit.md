@@ -123,4 +123,106 @@
 **Context**: CONSTRUCTION - Build and Test (Approved) → Operations (Placeholder)
 
 ---
+
+## ═══════════════════════════════════════════
+## NEW FEATURE: Favorites
+## ═══════════════════════════════════════════
+
+## Workspace Detection — Favorites Feature
+**Timestamp**: 2026-04-26T01:00:00Z
+**User Input**: "Using AI-DLC, add a new feature to this existing project: users can mark any article as a favorite, see a 'My favorites' view that lists only the articles they've favorited, and toggle the favorite status with one click from both the listing page and the article detail page."
+**AI Response**: Brownfield workspace detected. Existing codebase (FastAPI+HTMX knowledge-base app) with comprehensive application design artifacts from previous cycle. No reverse engineering artifacts but prior cycle docs serve as context. Proceeding to Requirements Analysis.
+**Context**: INCEPTION - Workspace Detection (Brownfield)
+
+---
+
+## Requirements Analysis — Favorites Feature — Questions Created
+**Timestamp**: 2026-04-26T01:01:00Z
+**AI Response**: Created favorites-requirement-questions.md with 4 questions (UI toggle style, sort order, visibility of counts, navigation placement). Standard depth selected. Intent analysis: New Feature, Multiple Components, Simple-to-Moderate complexity. Extensions already decided from previous cycle (both disabled).
+**Context**: INCEPTION - Requirements Analysis (Step 6)
+
+---
+
+## Requirements Analysis — Favorites Feature — Answers Received
+**Timestamp**: 2026-04-26T01:02:00Z
+**User Input**: "Done"
+**Answers**:
+- Q1 (UI toggle): B — Heart icon (♥ / ♡)
+- Q2 (Sort order): A — Most recently favorited first
+- Q3 (Visibility): A — Show favorites count on listing and detail pages
+- Q4 (Navigation): B — Dedicated section on the home/listing page (filter toggle)
+**AI Response**: All 4 answers validated, no ambiguities. Generated favorites-requirements.md with 6 functional requirements, NFR section, and data model extension (Favorite entity).
+**Context**: INCEPTION - Requirements Analysis (Step 7)
+
+---
+
+## Requirements Analysis — Favorites Feature — User Approval
+**Timestamp**: 2026-04-26T01:03:00Z
+**User Input**: "Approve & Continue"
+**AI Response**: User approved favorites requirements. Proceeding to Workflow Planning.
+**Context**: INCEPTION - Requirements Analysis (Approved) → Workflow Planning
+
+---
+
+## Workflow Planning — Favorites Feature — Complete
+**Timestamp**: 2026-04-26T01:04:00Z
+**AI Response**: Execution plan created. 2 stages to execute (Code Generation, Build and Test). 8 stages skipped (Reverse Engineering, User Stories, Application Design, Units Generation, Functional Design, NFR Requirements, NFR Design, Infrastructure Design). Risk level: Low. Feature fits within existing architecture.
+**Context**: INCEPTION - Workflow Planning (Step 9 - Approval Gate)
+
+---
+
+## Workflow Planning — Favorites Feature — User Approval
+**Timestamp**: 2026-04-26T01:05:00Z
+**User Input**: "Approve & Continue"
+**AI Response**: User approved execution plan. Proceeding to Code Generation Part 1 (Planning).
+**Context**: INCEPTION - Workflow Planning (Approved) → CONSTRUCTION - Code Generation
+
+---
+
+## Code Generation — Favorites Feature — Plan Created
+**Timestamp**: 2026-04-26T01:06:00Z
+**AI Response**: Created favorites-code-generation-plan.md with 10 steps: Favorite model (Step 1), Favorite service (Step 2), Toggle partial (Step 3), Route (Step 4), Listing page updates (Step 5), Detail page updates (Step 6), CSS (Step 7), Service tests (Step 8), Route tests (Step 9), Regression check (Step 10). All 6 FR-FAV requirements covered.
+**Context**: CONSTRUCTION - Code Generation (Part 1 - Planning, Step 7 - Approval Gate)
+
+---
+
+## Code Generation — Favorites Feature — Plan Approved
+**Timestamp**: 2026-04-26T01:07:00Z
+**User Input**: "Approve & Continue"
+**AI Response**: User approved plan. Executing Part 2 — all 10 steps.
+**Context**: CONSTRUCTION - Code Generation (Part 1 Approved → Part 2 Generation)
+
+---
+
+## Code Generation — Favorites Feature — Complete
+**Timestamp**: 2026-04-26T01:08:00Z
+**AI Response**: All 10 steps executed successfully. Files created: app/models/favorite.py, app/services/favorite_service.py, app/templates/partials/favorite_toggle.html, tests/test_favorite_service.py (9 tests). Files modified: app/models/__init__.py, app/models/user.py, app/models/article.py, app/routes/articles.py (new route + updated home + detail), app/templates/partials/article_list.html, app/templates/articles/list.html, app/templates/articles/detail.html, app/static/style.css, tests/test_routes_articles.py (6 tests). Test results: 54/54 passed (39 existing + 15 new). Presenting approval gate.
+**Context**: CONSTRUCTION - Code Generation (Step 14 - Approval Gate)
+
+---
+
+## Code Generation — Favorites Feature — User Approval
+**Timestamp**: 2026-04-26T01:09:00Z
+**User Input**: "Continue to Next Stage"
+**AI Response**: User approved code generation. Proceeding to Build and Test.
+**Context**: CONSTRUCTION - Code Generation (Approved) → Build and Test
+
+---
+
+## Build and Test — Favorites Feature — Complete
+**Timestamp**: 2026-04-26T01:10:00Z
+**Build Status**: Success (uv 0.11.7, Python 3.14.4, 37 packages — no new deps)
+**Test Results**: 54 passed, 0 failed (33 service tests + 21 route tests). 39 existing tests unchanged, 15 new favorites tests.
+**Regressions**: None
+**AI Response**: Build and test complete. Updated build-and-test-summary.md and unit-test-instructions.md with favorites test details. Presenting approval gate.
+**Context**: CONSTRUCTION - Build and Test (Step 9 - Approval Gate)
+
+---
+
+## Build and Test — Favorites Feature — User Approval
+**Timestamp**: 2026-04-26T01:11:00Z
+**User Input**: "Approve & Continue"
+**AI Response**: User approved build and test results. All stages for the Favorites feature are now complete. Proceeding to Operations (placeholder).
+**Context**: CONSTRUCTION - Build and Test (Approved) → Operations (Placeholder) → COMPLETE
+
 ---

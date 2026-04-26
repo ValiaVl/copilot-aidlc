@@ -13,6 +13,14 @@ from app.services.article_service import (
     toggle_stale,
     update_article,
 )
+from app.services.favorite_service import (
+    get_favorite_counts,
+    get_user_favorite_ids,
+    is_favorited as check_favorited,
+    get_favorite_count,
+    list_favorites,
+    toggle_favorite,
+)
 from app.templating import templates
 
 router = APIRouter()
@@ -40,12 +48,20 @@ def render_markdown(text: str) -> str:
 def home(
     request: Request,
     tag: str | None = None,
+    favorites: str | None = None,
     db: Session = Depends(get_db),
 ):
     user = get_current_user(request, db)
     if user is None:
         return RedirectResponse(url="/signin", status_code=303)
-    articles = list_articles(db, tag=tag)
+    show_favorites = favorites == "1"
+    if show_favorites:
+        articles = list_favorites(db, user.id)
+    else:
+        articles = list_articles(db, tag=tag)
+    favorite_ids = get_user_favorite_ids(db, user.id)
+    article_ids = [a.id for a in articles]
+    fav_counts = get_favorite_counts(db, article_ids)
     return templates.TemplateResponse(
         request,
         "articles/list.html",
@@ -53,6 +69,9 @@ def home(
             "articles": articles,
             "current_tag": tag,
             "user": user,
+            "favorite_ids": favorite_ids,
+            "favorite_counts": fav_counts,
+            "show_favorites": show_favorites,
         },
     )
 
@@ -127,6 +146,8 @@ def get_article_detail(
     if article is None:
         return HTMLResponse("Article not found", status_code=404)
     rendered_body = render_markdown(article.body)
+    favorited = check_favorited(db, user.id, article.id)
+    fav_count = get_favorite_count(db, article.id)
     return templates.TemplateResponse(
         request,
         "articles/detail.html",
@@ -134,6 +155,8 @@ def get_article_detail(
             "user": user,
             "article": article,
             "rendered_body": rendered_body,
+            "is_favorited": favorited,
+            "favorite_count": fav_count,
         },
     )
 
@@ -219,6 +242,28 @@ def post_toggle_stale(
         request,
         "partials/stale_banner.html",
         context={"article": article},
+    )
+
+
+@router.post("/articles/{article_id}/favorite", name="article_toggle_favorite")
+def post_toggle_favorite(
+    request: Request,
+    article_id: int,
+    user=Depends(require_auth),
+    db: Session = Depends(get_db),
+):
+    article, now_favorited = toggle_favorite(db, user.id, article_id)
+    if article is None:
+        return HTMLResponse("Article not found", status_code=404)
+    fav_count = get_favorite_count(db, article_id)
+    return templates.TemplateResponse(
+        request,
+        "partials/favorite_toggle.html",
+        context={
+            "article_id": article_id,
+            "is_favorited": now_favorited,
+            "favorite_count": fav_count,
+        },
     )
 
 

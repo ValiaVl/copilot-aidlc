@@ -17,3 +17,4 @@ class User(Base):
 
     articles = relationship("Article", back_populates="author")
     edits = relationship("EditLog", back_populates="editor")
+    favorites = relationship("Favorite", back_populates="user")

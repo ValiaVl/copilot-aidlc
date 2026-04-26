@@ -73,3 +73,55 @@ def test_home_lists_articles(client):
     response = client.get("/")
     assert response.status_code == 200
     assert "Listed Article" in response.text
+
+
+def _create_article(client, title="Fav Test", body="Body"):
+    resp = client.post("/articles", data={"title": title, "body": body}, follow_redirects=False)
+    return resp.headers["location"]  # e.g. "/articles/1"
+
+
+def test_toggle_favorite_on(client):
+    url = _create_article(client)
+    response = client.post(f"{url}/favorite")
+    assert response.status_code == 200
+    assert "♥" in response.text or "&#9829;" in response.text
+
+
+def test_toggle_favorite_off(client):
+    url = _create_article(client)
+    client.post(f"{url}/favorite")  # on
+    response = client.post(f"{url}/favorite")  # off
+    assert response.status_code == 200
+    assert "♡" in response.text or "&#9825;" in response.text
+
+
+def test_toggle_favorite_requires_auth():
+    with TestClient(app) as c:
+        # Don't sign in
+        response = c.post("/articles/1/favorite", follow_redirects=False)
+        assert response.status_code == 303
+        assert "/signin" in response.headers["location"]
+
+
+def test_home_shows_favorite_hearts(client):
+    _create_article(client, title="Heart Test")
+    response = client.get("/")
+    assert response.status_code == 200
+    assert "favorite-toggle" in response.text
+
+
+def test_favorites_filter(client):
+    url = _create_article(client, title="Favorited One")
+    _create_article(client, title="Not Favorited")
+    client.post(f"{url}/favorite")
+    response = client.get("/?favorites=1")
+    assert response.status_code == 200
+    assert "Favorited One" in response.text
+    assert "Not Favorited" not in response.text
+
+
+def test_detail_shows_favorite_heart(client):
+    url = _create_article(client)
+    response = client.get(url)
+    assert response.status_code == 200
+    assert "favorite-toggle" in response.text

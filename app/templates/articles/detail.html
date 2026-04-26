@@ -13,6 +13,8 @@
     <div class="article-meta" data-testid="article-meta">
         <span>by <strong>{{ article.author.name }}</strong></span>
         <span>on {{ article.created_at.strftime("%B %d, %Y") }}</span>
+        {% set article_id = article.id %}
+        {% include "partials/favorite_toggle.html" %}
     </div>
 
     <div class="article-tags" data-testid="article-tags">

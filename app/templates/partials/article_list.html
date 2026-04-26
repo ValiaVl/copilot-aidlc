@@ -22,6 +22,12 @@
                     >{{ tag.name }}</a>
                 {% endfor %}
             </div>
+            {% if favorite_ids is defined %}
+            {% set article_id = article.id %}
+            {% set is_favorited = article.id in favorite_ids %}
+            {% set favorite_count = favorite_counts.get(article.id, 0) %}
+            {% include "partials/favorite_toggle.html" %}
+            {% endif %}
         </div>
     {% endfor %}
 {% else %}

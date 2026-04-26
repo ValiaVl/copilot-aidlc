@@ -34,3 +34,4 @@ class Article(Base):
     edit_logs = relationship(
         "EditLog", back_populates="article", order_by="EditLog.edited_at.desc()"
     )
+    favorites = relationship("Favorite", back_populates="article", cascade="all, delete-orphan")

@@ -1,0 +1,13 @@
+<span class="favorite-toggle" data-testid="favorite-toggle-{{ article_id }}">
+    <button
+        hx-post="/articles/{{ article_id }}/favorite"
+        hx-target="closest .favorite-toggle"
+        hx-swap="outerHTML"
+        class="btn-heart"
+        data-testid="favorite-button-{{ article_id }}"
+        title="{% if is_favorited %}Remove from favorites{% else %}Add to favorites{% endif %}"
+    >
+        <span class="heart{% if is_favorited %} heart-filled{% endif %}">{% if is_favorited %}&#9829;{% else %}&#9825;{% endif %}</span>
+        <span class="favorite-count" data-testid="favorite-count-{{ article_id }}">{{ favorite_count }}</span>
+    </button>
+</span>

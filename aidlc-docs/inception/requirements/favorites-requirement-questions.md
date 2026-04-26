@@ -10,7 +10,7 @@ B) Heart icon (♥ / ♡) — filled when favorited, outline when not
 C) Simple text button ("Favorite" / "Unfavorite")
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: B
 
 ## Question 2
 In the "My Favorites" view, how should favorited articles be sorted?
@@ -20,7 +20,7 @@ B) Most recently created/updated article first (same as home page)
 C) Alphabetical by title
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 3
 Should other users be able to see how many people have favorited an article (e.g., a favorites count on the article card)?
@@ -29,7 +29,7 @@ A) Yes — show a count on listing and detail pages
 B) No — favorites are private, no count visible to others
 C) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: A
 
 ## Question 4
 Where should the "My Favorites" view be accessible from?
@@ -39,4 +39,4 @@ B) A dedicated section on the home/listing page (e.g., tab or filter toggle)
 C) Both — nav link and a filter toggle on the listing page
 D) Other (please describe after [Answer]: tag below)
 
-[Answer]: 
+[Answer]: B

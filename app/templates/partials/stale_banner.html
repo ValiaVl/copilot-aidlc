@@ -1,0 +1,16 @@
+<div id="stale-banner" data-testid="stale-banner">
+    {% if article.is_stale %}
+        <div class="stale-warning" data-testid="stale-warning">
+            ⚠️ <strong>This article may be outdated.</strong> Verify before relying on it.
+        </div>
+    {% endif %}
+    <button
+        hx-post="/articles/{{ article.id }}/stale"
+        hx-target="#stale-banner"
+        hx-swap="outerHTML"
+        class="btn-small"
+        data-testid="stale-toggle-button"
+    >
+        {% if article.is_stale %}Remove stale flag{% else %}Flag as stale{% endif %}
+    </button>
+</div>

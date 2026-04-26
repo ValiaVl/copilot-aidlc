@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+
+{% block title %}Sign In — Knowledge Base{% endblock %}
+
+{% block content %}
+<div class="signin-container">
+    <h1>Sign In</h1>
+    <p>Enter your name to get started. No password needed.</p>
+    <form method="post" action="/signin" data-testid="signin-form">
+        {% if error %}
+            <div class="error" data-testid="signin-error">{{ error }}</div>
+        {% endif %}
+        <label for="name">Your name</label>
+        <input
+            type="text"
+            id="name"
+            name="name"
+            placeholder="e.g. Alice"
+            required
+            autofocus
+            data-testid="signin-name-input"
+        >
+        <button type="submit" data-testid="signin-submit-button">Sign In</button>
+    </form>
+</div>
+{% endblock %}

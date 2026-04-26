@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}{% if article %}Edit Article{% else %}New Article{% endif %} — Knowledge Base{% endblock %}
+
+{% block content %}
+<h1>{% if article %}Edit Article{% else %}New Article{% endif %}</h1>
+
+<form
+    method="post"
+    action="{% if article %}/articles/{{ article.id }}/edit{% else %}/articles{% endif %}"
+    data-testid="article-form"
+>
+    <div class="form-group">
+        <label for="title">Title</label>
+        <input
+            type="text"
+            id="title"
+            name="title"
+            maxlength="200"
+            value="{{ title_value | default('', true) }}"
+            required
+            data-testid="article-title-input"
+        >
+        {% if errors.get("title") %}
+            <div class="error" data-testid="title-error">{{ errors.title }}</div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label for="body">Body (Markdown)</label>
+        <div class="editor-controls">
+            <button
+                type="button"
+                id="preview-btn"
+                onclick="togglePreview()"
+                data-testid="preview-toggle-button"
+            >Preview</button>
+        </div>
+        <textarea
+            id="body"
+            name="body"
+            rows="15"
+            maxlength="50000"
+            required
+            data-testid="article-body-input"
+        >{{ body_value | default('', true) }}</textarea>
+        <div
+            id="preview-area"
+            class="markdown-preview"
+            style="display:none;"
+            data-testid="preview-area"
+        ></div>
+        {% if errors.get("body") %}
+            <div class="error" data-testid="body-error">{{ errors.body }}</div>
+        {% endif %}
+    </div>
+
+    <div class="form-group">
+        <label>Tags</label>
+        <div id="tag-fields" data-testid="tag-fields">
+            {% for tag_val in tag_values %}
+                <div class="tag-field">
+                    <input
+                        type="text"
+                        name="tags"
+                        maxlength="50"
+                        value="{{ tag_val }}"
+                        placeholder="Tag name"
+                        data-testid="tag-input"
+                    >
+                    <button type="button" onclick="this.parentElement.remove()" class="remove-tag" data-testid="remove-tag-button">✕</button>
+                </div>
+            {% endfor %}
+        </div>
+        <button
+            type="button"
+            hx-get="/articles/tag-field"
+            hx-target="#tag-fields"
+            hx-swap="beforeend"
+            data-testid="add-tag-button"
+        >+ Add Tag</button>
+    </div>
+
+    <button type="submit" class="btn" data-testid="save-article-button">Save Article</button>
+</form>
+
+<script>
+    let previewing = false;
+    function togglePreview() {
+        const body = document.getElementById("body");
+        const preview = document.getElementById("preview-area");
+        const btn = document.getElementById("preview-btn");
+        previewing = !previewing;
+        if (previewing) {
+            const formData = new FormData();
+            formData.append("body", body.value);
+            fetch("/articles/preview", { method: "POST", body: formData })
+                .then(r => r.text())
+                .then(html => {
+                    preview.innerHTML = html;
+                    body.style.display = "none";
+                    preview.style.display = "block";
+                    btn.textContent = "Edit";
+                });
+        } else {
+            body.style.display = "block";
+            preview.style.display = "none";
+            btn.textContent = "Preview";
+        }
+    }
+</script>
+{% endblock %}

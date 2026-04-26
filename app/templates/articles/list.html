@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block title %}Articles — Knowledge Base{% endblock %}
+
+{% block content %}
+<div class="articles-header">
+    <h1>Articles</h1>
+    <a href="/articles/new" class="btn" data-testid="new-article-button">+ New Article</a>
+</div>
+
+<div class="search-bar">
+    <input
+        type="search"
+        name="q"
+        placeholder="Search articles..."
+        hx-get="/search"
+        hx-trigger="keyup changed delay:300ms"
+        hx-target="#article-list"
+        hx-include="[name='tag']"
+        data-testid="search-input"
+    >
+    {% if current_tag %}
+        <span class="active-tag">
+            Filtered by: <strong>{{ current_tag }}</strong>
+            <a href="/" data-testid="clear-tag-filter">✕</a>
+        </span>
+        <input type="hidden" name="tag" value="{{ current_tag }}">
+    {% endif %}
+</div>
+
+<div id="article-list" data-testid="article-list">
+    {% include "partials/article_list.html" %}
+</div>
+{% endblock %}

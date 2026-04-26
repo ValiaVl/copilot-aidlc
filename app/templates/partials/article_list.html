@@ -1,0 +1,29 @@
+{% if articles %}
+    {% for article in articles %}
+        <div class="article-card{% if article.is_stale %} stale{% endif %}" data-testid="article-card">
+            <h2>
+                <a href="/articles/{{ article.id }}" data-testid="article-card-title">{{ article.title }}</a>
+            </h2>
+            <div class="card-meta">
+                <span data-testid="article-card-author">by {{ article.author.name }}</span>
+                <span data-testid="article-card-date">{{ article.created_at.strftime("%b %d, %Y") }}</span>
+                {% if article.is_stale %}
+                    <span class="stale-badge" data-testid="article-card-stale-badge">⚠ Stale</span>
+                {% endif %}
+            </div>
+            <div class="card-tags" data-testid="article-card-tags">
+                {% for tag in article.tags %}
+                    <a
+                        href="/?tag={{ tag.name }}"
+                        class="tag"
+                        hx-get="/search?tag={{ tag.name }}"
+                        hx-target="#article-list"
+                        data-testid="article-card-tag-{{ tag.name }}"
+                    >{{ tag.name }}</a>
+                {% endfor %}
+            </div>
+        </div>
+    {% endfor %}
+{% else %}
+    <p class="no-results" data-testid="no-results">No articles found.</p>
+{% endif %}

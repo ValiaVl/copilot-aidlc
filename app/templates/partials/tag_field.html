@@ -1,0 +1,11 @@
+<div class="tag-field">
+    <input
+        type="text"
+        name="tags"
+        maxlength="50"
+        value="{{ value }}"
+        placeholder="Tag name"
+        data-testid="tag-input"
+    >
+    <button type="button" onclick="this.parentElement.remove()" class="remove-tag" data-testid="remove-tag-button">✕</button>
+</div>

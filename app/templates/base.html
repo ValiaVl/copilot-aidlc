@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Team Knowledge Base{% endblock %}</title>
+    <script src="https://unpkg.com/htmx.org@2.0.4"></script>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <nav data-testid="main-nav">
+        <div class="nav-brand">
+            <a href="/" data-testid="nav-home-link">📚 Knowledge Base</a>
+        </div>
+        <div class="nav-links">
+            {% if request.session.get("user_id") %}
+                <span data-testid="nav-user-name">{{ request.session.get("user_name", "") }}</span>
+                <a href="/signout" data-testid="nav-signout-link">Sign Out</a>
+            {% else %}
+                <a href="/signin" data-testid="nav-signin-link">Sign In</a>
+            {% endif %}
+        </div>
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
